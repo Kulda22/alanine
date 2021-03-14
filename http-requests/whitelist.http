@@ -1,0 +1,9 @@
+PUT 127.0.0.1:8080/pi/whitelist?domain=koko.cz
+
+###
+PUT 127.0.0.1:8080/pi/whitelist/wildcard?domain=kokoskaka.cz
+
+###
+PUT 127.0.0.1:8080/pi/whitelist/regex?domain=palickaka.cz
+
+###

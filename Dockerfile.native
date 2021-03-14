@@ -1,0 +1,20 @@
+
+## Stage 1 : build with maven builder image with native capabilities
+FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 AS build
+COPY pom.xml /usr/src/app/
+RUN mvn -f /usr/src/app/pom.xml -B de.qaware.maven:go-offline-maven-plugin:1.2.5:resolve-dependencies
+COPY src /usr/src/app/src
+USER root
+RUN mvn -f /usr/src/app/pom.xml -Pnative clean package
+
+## Stage 2 : create the docker final image
+FROM pihole/pihole:latest
+
+ADD s6-native /etc/services.d
+
+
+COPY --from=build /usr/src/app/target/*-runner /work/application
+
+RUN chmod 777 /work
+RUN chmod 777 /work/application
+EXPOSE 8080

@@ -1,0 +1,17 @@
+FROM pihole/pihole:latest
+
+RUN mkdir -p /usr/share/man/man1 /usr/share/man/man2
+RUN apt-get update && apt-get install -y openjdk-11-jre-headless  && rm -rf /tmp/* /var/cache/apk/*
+
+
+RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.bashrc
+
+
+COPY target/quarkus-app app-folder
+ADD s6-fastjar/ /etc/services.d
+
+EXPOSE 8080
+
+
+
+#CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

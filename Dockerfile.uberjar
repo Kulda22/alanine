@@ -1,0 +1,10 @@
+FROM pihole/pihole:latest
+
+
+ADD s6-fastjar/ /etc/services.d
+
+#add java
+#COPY target/quarkus-app app-folder
+
+
+EXPOSE 8080

@@ -1,4 +1,4 @@
-name: buildx-java
+name: buildx-java-master
 
 on:
   pull_request:
@@ -29,17 +29,13 @@ jobs:
           skip-cache: false
           qemu-version: latest
 
-
-      - name: Available platforms
-        run: echo ${{ steps.buildx.outputs.platforms }}
-
       # Build the images, without pushing
       - name: Run Buildx
         run: |
           docker buildx build \
             -f Dockerfile.fastjar\
             --platform linux/amd64,linux/arm64,linux/arm/v7\
-            -t kulda22/alanine:${GITHUB_SHA::7} \
+            -t kulda22/alanine:latest \
             .
 
       - name: Login to DockerHub
@@ -51,6 +47,6 @@ jobs:
           docker buildx build \
             -f Dockerfile.fastjar\
             --platform linux/amd64,linux/arm64,linux/arm/v7\
-            -t kulda22/alanine:${GITHUB_SHA::7} \
+            -t kulda22/alanine:latest \
             . \
             --push

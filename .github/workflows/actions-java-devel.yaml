@@ -1,0 +1,52 @@
+name: buildx-java-devel
+
+on:
+  pull_request:
+    branches: development
+  push:
+    branches: development
+    tags:
+
+jobs:
+  buildx:
+    runs-on: ubuntu-latest
+    steps:
+      # Get the repositery's code
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build with Maven
+        run: mvn -Dquarkus.package.type=fast-jar package
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v2
+        with: # in production, fix the version of your dependencies
+          buildx-version: latest
+          skip-cache: false
+          qemu-version: latest
+
+      # Build the images, without pushing
+      - name: Run Buildx
+        run: |
+          docker buildx build \
+            -f Dockerfile.fastjar\
+            --platform linux/amd64,linux/arm64,linux/arm/v7\
+            -t kulda22/alanine:dev \
+            .
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # Reusing the cache, push the images
+      - name: Run Buildx
+        run: |
+          docker buildx build \
+            -f Dockerfile.fastjar\
+            --platform linux/amd64,linux/arm64,linux/arm/v7\
+            -t kulda22/alanine:dev \
+            . \
+            --push

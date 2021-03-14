@@ -1,3 +1,11 @@
+## Stage 1 : build with maven builder image with native capabilities
+FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 AS build
+COPY pom.xml /usr/src/app/
+RUN mvn -f /usr/src/app/pom.xml -B de.qaware.maven:go-offline-maven-plugin:1.2.5:resolve-dependencies
+COPY src /usr/src/app/src
+USER root
+RUN mvn -f /usr/src/app/pom.xml -Dquarkus.package.type=fast-jar package
+
 FROM pihole/pihole:latest
 
 RUN mkdir -p /usr/share/man/man1 /usr/share/man/man2
@@ -7,7 +15,8 @@ RUN apt-get update && apt-get install -y openjdk-11-jre-headless  && rm -rf /tmp
 RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.bashrc
 
 
-COPY target/quarkus-app app-folder
+COPY --from=build /usr/src/app/target/quarkus-app app-folder
+
 ADD s6-fastjar/ /etc/services.d
 
 EXPOSE 8080

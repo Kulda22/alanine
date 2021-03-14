@@ -30,3 +30,6 @@ prune - https://www.loicmathieu.fr/wordpress/en/informatique/quarkus-jlink-et-ap
 jlink --no-header-files --no-man-pages --output target/customjdk --compress=2 --strip-debug --module-path $JAVA_HOME/jmods --add-modules java.base,java.compiler,java.datatransfer,java.desktop,java.instrument,java.logging,java.management,java.naming,java.rmi,java.sql,java.transaction.xa,java.xml,jdk.compiler,jdk.unsupported
 /// worthless - 30 mb save ?                                                
 
+
+ss
+

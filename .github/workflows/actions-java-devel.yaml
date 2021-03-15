@@ -1,4 +1,4 @@
-  name: buildx-java-devel
+name: buildx-java-devel
 
 on:
   pull_request:

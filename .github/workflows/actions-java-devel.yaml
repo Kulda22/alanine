@@ -50,3 +50,35 @@ jobs:
             -t kulda22/alanine:dev \
             . \
             --push
+        # AMD64 native image
+      - name: Create amd64 native binary
+        run: mvn package -Pnative -Dquarkus.native.container-build=true
+      - name: build amd64 image
+        run: |
+          docker build \
+          -t kulda22/alanine:native-amd64 \
+          -f Dockerfile.native \
+          --build-arg ARCH=amd64/ .
+      - name: Push amd64 image
+        run: |
+          docker push kulda22/alanine:native-amd64
+        #ARM64 native image with custom builder image
+      - name: Create arm64 native binary
+        run: |
+        mvn package -Pnative -Dquarkus.native.container-build=true \
+        -Dquarkus.native.builder-image=kulda22/alanine:native-builder-arm64
+      - name: Build arm64 docker image
+        run: |
+          docker buildx  build \
+          -f Dockerfile.native --platform linux/arm64 \
+          -t kulda22/alanine:native-arm64 . --push
+      - name: Create manifest
+        run: |
+          docker manifest create kulda22/alanine:native-latest \
+          --amend kulda22/alanine:native-arm64 \
+          --amend kulda22/alanine:native-amd64
+      - name: Push manifest
+        run: |
+          docker manifest push kulda22/alanine:native-latest
+
+

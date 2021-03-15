@@ -65,8 +65,8 @@ jobs:
         #ARM64 native image with custom builder image
       - name: Create arm64 native binary
         run: |
-        mvn package -Pnative -Dquarkus.native.container-build=true \
-        -Dquarkus.native.builder-image=kulda22/alanine:native-builder-arm64
+          mvn package -Pnative -Dquarkus.native.container-build=true \
+          -Dquarkus.native.builder-image=kulda22/alanine:native-builder-arm64
       - name: Build arm64 docker image
         run: |
           docker buildx  build \

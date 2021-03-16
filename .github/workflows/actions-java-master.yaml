@@ -7,6 +7,7 @@ on:
     branches: master
     tags:
 
+
 jobs:
   buildx:
     runs-on: ubuntu-latest
@@ -29,24 +30,43 @@ jobs:
           skip-cache: false
           qemu-version: latest
 
-      # Build the images, without pushing
-      - name: Run Buildx
-        run: |
-          docker buildx build \
-            -f Dockerfile.fastjar\
-            --platform linux/amd64,linux/arm64,linux/arm/v7\
-            -t kulda22/alanine:latest \
-            .
-
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # Reusing the cache, push the images
-      - name: Run Buildx
+      - name: Build java arm7 image
         run: |
-          docker buildx build \
-            -f Dockerfile.fastjar\
-            --platform linux/amd64,linux/arm64,linux/arm/v7\
-            -t kulda22/alanine:latest \
-            . \
-            --push
+          docker buildx build -f Dockerfile.fastjar \
+          --platform linux/arm/v7 \
+          -t kulda22/alanine:latest-arm7 \
+          . \
+          --push
+        # AMD64 native image
+      - name: Create amd64 native binary
+        run: mvn package -Pnative -Dquarkus.native.container-build=true
+      - name: build amd64 image
+        run: |
+          docker buildx  build \
+          -f Dockerfile.native --platform linux/amd64 \
+          -t kulda22/alanine:latest-amd64 . \
+          --push
+        #ARM64 native image with custom builder image
+      - name: Create arm64 native binary
+        run: |
+          mvn package -Pnative -Dquarkus.native.container-build=true \
+          -Dquarkus.native.builder-image=kulda22/alanine:native-builder-arm64
+      - name: Build arm64 docker image
+        run: |
+          docker buildx  build \
+          -f Dockerfile.native --platform linux/arm64 \
+          -t kulda22/alanine:latest-arm64 . --push
+      - name: Create manifest
+        run: |
+          docker manifest create kulda22/alanine:latest \
+          --amend kulda22/alanine:latest-arm64 \
+          --amend kulda22/alanine:latest-amd64 \
+          --amend kulda22/alanine:latest-arm7
+      - name: Push manifest
+        run: |
+          docker manifest push kulda22/alanine:latest
+
+

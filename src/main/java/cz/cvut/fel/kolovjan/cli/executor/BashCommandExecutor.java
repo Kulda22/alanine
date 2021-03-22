@@ -12,7 +12,7 @@ public class BashCommandExecutor implements CommandExecutorInterface {
 
 
     /// TODO : better way to make sure we won't try two commands at same time
-    public synchronized ExecutorReturnWrapper execute(String command) {
+    public ExecutorReturnWrapper execute(String command) {
         ProcessBuilder processBuilder = new ProcessBuilder();
         log.info("executing command {} ", command);
         processBuilder.command("bash", "-c", command);

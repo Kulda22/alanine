@@ -1,7 +1,7 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
-import cz.cvut.fel.kolovjan.exception.PluginException;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import cz.cvut.fel.kolovjan.utils.StatusCommandResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class StatusCommand extends Command {
             boolean isBlockingEnabled = statusReturnWrapper.getOutput().contains("Pi-hole blocking is enabled");
             return new StatusCommandResponse(true, "status queried successfully", isDnsListening, isBlockingEnabled);
         } else {
-            throw new PluginException(statusReturnWrapper.getErrorOutput());
+            throw new AlanineException(statusReturnWrapper.getErrorOutput());
         }
     }
 }

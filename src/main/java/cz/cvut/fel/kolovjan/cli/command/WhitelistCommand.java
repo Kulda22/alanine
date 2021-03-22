@@ -1,9 +1,9 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.exception.DomainNameAlreadyInDatabaseException;
 import cz.cvut.fel.kolovjan.exception.InvalidDomainNameException;
-import cz.cvut.fel.kolovjan.exception.PluginException;
 import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +30,6 @@ public class WhitelistCommand extends Command {
      * @param domain
      * @return
      */
-    private boolean checkIfDomainNameIsMalicioud(String domain) {
-        return domain.contains(" ");
-    }
 
     public CommandResponse whitelistExactDomain(String domain) {
 
@@ -51,7 +48,7 @@ public class WhitelistCommand extends Command {
 
     private CommandResponse execute(String command, String domain) {
         log.error("WGITELIST :" + command);
-        if (checkIfDomainNameIsMalicioud(domain)) {
+        if (checkIfDomainNameIsMalicious(domain)) {
             // todo better message ? or security through obscurity
             log.error("malicious");
             throw new InvalidDomainNameException(domain);
@@ -71,10 +68,10 @@ public class WhitelistCommand extends Command {
             } else if (executorReturnWrapper.getOutput().contains("is not a valid argument or domain name!")) {
                 throw new InvalidDomainNameException(domain);
             } else {
-                throw new PluginException("Unknown output from blacklist command :" + executorReturnWrapper.getOutput());
+                throw new AlanineException("Unknown output from blacklist command :" + executorReturnWrapper.getOutput());
             }
         } else {
-            throw new PluginException(executorReturnWrapper.getErrorOutput());
+            throw new AlanineException(executorReturnWrapper.getErrorOutput());
         }
 
     }

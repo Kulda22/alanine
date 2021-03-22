@@ -5,6 +5,7 @@ import cz.cvut.fel.kolovjan.service.*;
 import cz.cvut.fel.kolovjan.utils.TimeUnitEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -33,6 +34,7 @@ public class CommandController {
 
     @GET
     @Path("/status")
+    @NoCache
     public Response list() {
         return Response.ok(statusService.getStatusMap()).build();
     }

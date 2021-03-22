@@ -2,7 +2,7 @@ package cz.cvut.fel.kolovjan.cli.command;
 
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
-import cz.cvut.fel.kolovjan.exception.PluginException;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class EnableLoggingCommand extends Command {
             return new CommandResponse(true, "Logging has been enabled!");
         } else {
             /// some kind of error
-            throw new PluginException(executorReturnWrapper.getErrorOutput());
+            throw new AlanineException(executorReturnWrapper.getErrorOutput());
         }
     }
 }

@@ -1,7 +1,7 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
-import cz.cvut.fel.kolovjan.exception.PluginException;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import cz.cvut.fel.kolovjan.utils.LoggingReenabler;
@@ -34,7 +34,7 @@ public class DisableLoggingCommand extends Command {
             return new CommandResponse(true, "Logging has been disabled!");
             /// some kind of error
         } else {
-            throw new PluginException(executorReturnWrapper.getErrorOutput());
+            throw new AlanineException(executorReturnWrapper.getErrorOutput());
         }
     }
 

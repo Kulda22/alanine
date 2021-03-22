@@ -1,7 +1,7 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
-import cz.cvut.fel.kolovjan.exception.PluginException;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import cz.cvut.fel.kolovjan.utils.LoggingStatusCommandResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class LoggingStatusCommand extends Command {
             boolean isLoggingEnabled = loggingEnabledReturnWrapper.getOutput().contains("QUERY_LOGGING=true");
             return new LoggingStatusCommandResponse(true, "successfully got logging status", isLoggingEnabled);
         } else {
-            throw new PluginException(loggingEnabledReturnWrapper.getErrorOutput());
+            throw new AlanineException(loggingEnabledReturnWrapper.getErrorOutput());
         }
     }
 }

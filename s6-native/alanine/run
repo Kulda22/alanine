@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bash
 s6-echo "Starting alanine"
 
-/work/application >/dev/null 2>&1 &
+/work/application > /var/log/alanine.log 2>&1

@@ -1,7 +1,7 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
-import cz.cvut.fel.kolovjan.exception.PluginException;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class RestartDnsCommand extends Command {
             String msg = "DNS Restart failed with return code: " + executorReturnWrapper.getExitValue() + " and error output :" + executorReturnWrapper
                     .getErrorOutput();
             log.error(msg);
-            throw new PluginException(msg);
+            throw new AlanineException(msg);
         }
     }
 }

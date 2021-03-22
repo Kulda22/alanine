@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bash
 s6-echo "Starting alanine"
 
-java -jar /app-folder/quarkus-run.jar >/dev/null 2>&1 &
+java -jar /app-folder/quarkus-run.jar > /var/log/alanine.log 2>&1

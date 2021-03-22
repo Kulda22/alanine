@@ -14,5 +14,4 @@ ADD s6-fastjar/ /etc/services.d
 EXPOSE 8080
 
 
-
 #CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

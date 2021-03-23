@@ -18,4 +18,4 @@ COPY target/*-runner /work/application
 
 RUN chmod 777 /work
 RUN chmod 777 /work/application
-EXPOSE 8080
+EXPOSE 8221

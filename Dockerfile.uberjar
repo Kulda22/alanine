@@ -7,4 +7,4 @@ ADD s6-fastjar/ /etc/services.d
 #COPY target/quarkus-app app-folder
 
 
-EXPOSE 8080
+EXPOSE 8221

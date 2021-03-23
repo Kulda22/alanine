@@ -1,50 +1,79 @@
-# pi-hole-admin-plugin project
+# Alanine Server
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+    
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Overview
 
-## Running the application in dev mode
+This project aims to simplify controlling of your Pi-hole. It consists of two parts 
+- Server part which is a simple stand-alone REST server that you can use to control Pi-hole via your own app.
+ 
+- Browser plugin which acts as simple user interface.
 
-You can run your application in dev mode that enables live coding using:
+Under the hood this project uses This project uses Quarkus, the Supersonic Subatomic Java Framework. This enables to compile Java to native code, which is useful for not-so-powerful hardware (e.g. Raspberry Pi). Unfortunately, only linux binaries for AMD64 and ARM64 are available at the moment. So if you want to run Alanine on other architecture, you have to use Java JVM.  
+
+
+## Installation
+
+You can install Alanine in two ways. Docker or install script.
+
+The preferred way is to install docker container, since it is easier to manage and upgrade.
+
+### Docker install
+
+Alanine docker image extends official Pi-hole docker image, so should you use same parameters/script as you do with official docker image. Just add `-p 8221:8221` and use `kulda22/alanine` as image.
+
+Simple example of bash command to create and run Alanine in docker:
+
 ```shell script
-./mvnw compile quarkus:dev
+
+    # Note: ServerIP should be replaced with your external ip.
+    docker run -d \
+        --name alanine \
+        -p 53:53/tcp -p 53:53/udp \
+        -p 80:80 \
+        -p 443:443 \
+        -p 8221:8221 \
+        -e TZ="America/Chicago" \
+        -v "~/etc-pihole/:/etc/pihole/" \
+        -v "~/etc-dnsmasq.d/:/etc/dnsmasq.d/" \
+        --dns=127.0.0.1 --dns=1.1.1.1 \
+        --restart=unless-stopped \
+        --hostname pi.hole \
+        -e VIRTUAL_HOST="pi.hole" \
+        -e PROXY_LOCATION="pi.hole" \
+        -e ServerIP="127.0.0.1" \
+        kulda22/alanine:latest
 ```
 
-## Packaging and running the application
+### Script install
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `pi-hole-admin-plugin-1.0.0-SNAPSHOT-runner.jar` file in the `/target` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/lib` directory.
+With install script things get difficult. Again, please consider using docker.
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
+You can use script to install Alanine, or you can install it manually. You only have to download the right file from https://github.com/Kulda22/alanine/releases/latest, change file permission and install cron to run the file after boot.
 
-The application is now runnable using `java -jar target/pi-hole-admin-plugin-1.0.0-SNAPSHOT-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./mvnw package -Pnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/pi-hole-admin-plugin-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
-
-# RESTEasy JAX-RS
-
-Guide: https://quarkus.io/guides/rest-json
+ If you have AMD64/ARM64 architecture download right binary file and run it by `/<path to binary/alanine-*-runner`, if not use `java -jar /<path to jar>/quarkus-run.jar`.
 
 
+
+#### Prerequisites 
+
+
+If you are running linux ARM64 or AMD64 architecture there are none.
+
+For any other, java 8 or 11+ is a necessity.
+
+
+#### Installation
+
+Just download the install script (`install.sh`) and run `$ sudo ./install.sh`.
+#### Uninstall 
+
+For uninstall just use uninstall script (`$ sudo ./uninstall`)
+
+## Open api specification
+To be done. 
+
+
+## Contributing
+
+Any kind of PR, wishes for feature or feedback is welcome!

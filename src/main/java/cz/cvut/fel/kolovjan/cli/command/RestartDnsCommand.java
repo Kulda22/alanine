@@ -22,13 +22,11 @@ public class RestartDnsCommand extends Command {
 
     public CommandResponse execute() {
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole restartdns");
-        log.info(executorReturnWrapper.toString());
         if (executorReturnWrapper.getExitValue() == 0) {
             return new CommandResponse(true, "restart completed successfully");
         } else {
             String msg = "DNS Restart failed with return code: " + executorReturnWrapper.getExitValue() + " and error output :" + executorReturnWrapper
                     .getErrorOutput();
-            log.error(msg);
             throw new AlanineException(msg);
         }
     }

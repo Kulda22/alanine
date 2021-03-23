@@ -35,7 +35,7 @@ public class EnableCommand extends Command {
 
                 throw new PiholeAlreadyEnabledException();
             } else {
-                log.error("unknown output of disable : {} ",returnWrapper.getErrorOutput());
+                log.error("unknown output of ebale : {} ", returnWrapper.getErrorOutput());
                 throw new AlanineException("unknown output : " + returnWrapper.getErrorOutput());
             }
         } else {

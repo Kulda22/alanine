@@ -47,24 +47,21 @@ public class WhitelistCommand extends Command {
     }
 
     private CommandResponse execute(String command, String domain) {
-        log.error("WGITELIST :" + command);
         if (checkIfDomainNameIsMalicious(domain)) {
             // todo better message ? or security through obscurity
-            log.error("malicious");
+            log.error("Domain may be malicious");
             throw new InvalidDomainNameException(domain);
         }
         command = sanitizeString(command);
 
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute(command);
-        log.info(executorReturnWrapper.toString());
 
         if (executorReturnWrapper.getExitValue() == 0) {
             if (executorReturnWrapper.getOutput().contains("[i] Adding ")) {
                 return new CommandResponse(true, domain + " successfully added to whitelist");
                 /// already exists in blacklist, no need to add! || already exists in whitelist, no need to add!
-
             } else if (executorReturnWrapper.getOutput().matches("^.*already exists in (blacklist|whitelist).*\\n")) {
-                throw new DomainNameAlreadyInDatabaseException(executorReturnWrapper.getOutput());
+                throw new DomainNameAlreadyInDatabaseException(executorReturnWrapper.getOutput().replace("[i]", ""));
             } else if (executorReturnWrapper.getOutput().contains("is not a valid argument or domain name!")) {
                 throw new InvalidDomainNameException(domain);
             } else {

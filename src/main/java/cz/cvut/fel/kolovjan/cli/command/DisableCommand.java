@@ -54,7 +54,7 @@ public class DisableCommand extends Command {
                 /// pihole was already disabled
                 throw new PiholeAlreadyDisabledException();
             } else {
-                log.error("unknown output of disable : " + returnWrapper.getErrorOutput());
+                log.error("unknown output of disable : {}", returnWrapper.getErrorOutput());
                 throw new AlanineException("unknown output : " + returnWrapper.getErrorOutput());
 
             }

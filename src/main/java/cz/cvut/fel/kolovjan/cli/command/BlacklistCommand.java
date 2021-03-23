@@ -40,24 +40,21 @@ public class BlacklistCommand extends Command {
     private CommandResponse execute(String command, String domain) {
         if (checkIfDomainNameIsMalicious(domain)) {
             // todo better message ? or security through obscurity
-            log.error("malicious");
+            log.warn("Domain may be malicious");
             throw new InvalidDomainNameException(domain);
         }
         command = sanitizeString(command);
 
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute(command);
-        log.info(executorReturnWrapper.toString());
 
         if (executorReturnWrapper.getExitValue() == 0) {
             if (executorReturnWrapper.getOutput().contains("[i] Adding ")) {
-                log.info("god");
                 return new CommandResponse(true, domain + " successfully added to blacklist");
                 /// already exists in blacklist, no need to add! || already exists in whitelist, no need to add!
             } else if (executorReturnWrapper.getOutput().matches("^.*already exists in (blacklist|whitelist).*\\n")) {
-
-                throw new DomainNameAlreadyInDatabaseException(executorReturnWrapper.getOutput());
+                /// we remove [i], because there is no need for it.
+                throw new DomainNameAlreadyInDatabaseException(executorReturnWrapper.getOutput().replace("[i]", ""));
             } else if (executorReturnWrapper.getOutput().contains("is not a valid argument or domain name!")) {
-                log.info("fuck");
                 throw new InvalidDomainNameException(domain);
             } else {
                 throw new AlanineException("Unknown output from blacklist command :" + executorReturnWrapper.getOutput());

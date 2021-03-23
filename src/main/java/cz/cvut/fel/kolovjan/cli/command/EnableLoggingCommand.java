@@ -24,7 +24,6 @@ public class EnableLoggingCommand extends Command {
 
     public CommandResponse execute() {
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole logging on");
-        log.info(executorReturnWrapper.toString());
         if (executorReturnWrapper.getOutput().contains("Logging has been enabled!")) {
             /// no error and correct message
             return new CommandResponse(true, "Logging has been enabled!");

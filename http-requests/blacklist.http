@@ -1,9 +1,9 @@
-PUT 127.0.0.1:8080/pi/blacklist?domain=koko.cz
+PUT 127.0.0.1:8221/pi/blacklist?domain=koko.cz
 
 ###
-PUT 127.0.0.1:8080/pi/blacklist/wildcard?domain=pralka.cz
+PUT 127.0.0.1:8221/pi/blacklist/wildcard?domain=pralka.cz
 
 ###
-PUT 127.0.0.1:8080/pi/blacklist/regex?domain=palka.cz
+PUT 127.0.0.1:8221/pi/blacklist/regex?domain=palka.cz
 
 ###

@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 public class BashCommandExecutor implements CommandExecutorInterface {
 
 
-    /// TODO : better way to make sure we won't try two commands at same time
     public ExecutorReturnWrapper execute(String command) {
         ProcessBuilder processBuilder = new ProcessBuilder();
         log.info("executing command {} ", command);
@@ -41,11 +40,10 @@ public class BashCommandExecutor implements CommandExecutorInterface {
 
             exitVal = process.waitFor();
             if (exitVal == 0) {
-                log.info("Success!");
+                log.debug("Success!");
                 return new ExecutorReturnWrapper(output.toString(), errorOutput.toString(), exitVal);
             } else {
-                log.info(" no Success in executing command : " + command);
-                log.debug("Output: {} \n error output : {}", output, errorOutput);
+                log.info("No Success in executing command : {} \n Output: {} \n error output : {}", command, output, errorOutput);
             }
 
         } catch (IOException | InterruptedException e) {

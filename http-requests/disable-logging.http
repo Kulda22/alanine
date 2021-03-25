@@ -1,6 +1,6 @@
-PUT http://localhost:8221/pi/log/disable
+PUT http://localhost:8221/alanine/log/disable
 
 ###
-PUT http://localhost:8221/pi/log/disable?time=1
+PUT http://localhost:8221/alanine/log/disable?time=1
 
 ###

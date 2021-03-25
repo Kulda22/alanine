@@ -20,7 +20,7 @@ The preferred way is to install docker container, since it is easier to manage a
 
 ### Docker install
 
-Alanine docker image extends official Pi-hole docker image, so should you use same parameters/script as you do with official docker image. Just add `-p 8221:8221` and use `kulda22/alanine` as image.
+Alanine docker image extends official Pi-hole docker image (that mean's in one docker you have your standart Pi-hole and Alanine server), so should you use same parameters/script as you do with official docker image. Just add `-p 8221:8221` and use `kulda22/alanine` as image.
 
 Simple example of bash command to create and run Alanine in docker:
 
@@ -58,9 +58,9 @@ You can use script to install Alanine, or you can install it manually. You only 
 #### Prerequisites 
 
 
-If you are running linux ARM64 or AMD64 architecture there are none.
+If you are running linux ARM64 or AMD64 architecture you only need to have Pi-hole installed.
 
-For any other, java 8 or 11+ is a necessity.
+For any other, java 8 or 11+ is a necessity along with Pi-hole.
 
 
 #### Installation

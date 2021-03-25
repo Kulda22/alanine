@@ -1,9 +1,9 @@
-PUT 127.0.0.1:8221/pi/disable
+PUT 127.0.0.1:8221/alanine/disable
 
 ###
-PUT 127.0.0.1:8221/pi/disable?time=5&unit=i
+PUT 127.0.0.1:8221/alanine/disable?time=5&unit=i
 
 ###
-PUT 127.0.0.1:8221/pi/disable
+PUT 127.0.0.1:8221/alanine/disable
 
 ###

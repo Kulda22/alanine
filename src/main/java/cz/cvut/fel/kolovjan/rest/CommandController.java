@@ -2,33 +2,39 @@ package cz.cvut.fel.kolovjan.rest;
 
 
 import cz.cvut.fel.kolovjan.service.*;
+import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.TimeUnitEnum;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/pi")
+@Path("/alanine")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.WILDCARD)
 public class CommandController {
+    @ConfigProperty(name = "alanine.version")
+    String version;
 
 
-    private DnsServerService dnsServerService;
-    private GravityService gravityService;
-    private DomainService domainService;
-    private DnsBlockingService dnsBlockingService;
-    private LoggingService loggingService;
-    private StatusService statusService;
-    private VersionService versionService;
+    private final DnsServerService dnsServerService;
+    private final GravityService gravityService;
+    private final DomainService domainService;
+    private final DnsBlockingService dnsBlockingService;
+    private final LoggingService loggingService;
+    private final StatusService statusService;
+    private final VersionService versionService;
 
     @HEAD
     public Response hearthBeat() {
+
+        log.error(version);
         return Response.ok().build();
     }
 
@@ -116,5 +122,11 @@ public class CommandController {
     @Path("/blacklist/wildcard")
     public Response blacklistWildcardDomain(@QueryParam("domain") String domainName) {
         return Response.ok(domainService.blacklistWildcardDomain(domainName)).build();
+    }
+
+    @GET
+    @Path("/server/version")
+    public Response getServerVersion() {
+        return Response.ok(new CommandResponse(true, version)).build();
     }
 }

@@ -9,7 +9,6 @@
 #
 #
 
-
 is_command() {
   # Checks for existence of string passed in as only function argument.
   local check_command="$1"

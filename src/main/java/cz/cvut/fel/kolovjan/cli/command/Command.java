@@ -16,7 +16,25 @@ public abstract class Command {
     @Inject
     protected CommandExecutorInterface commandExecutor;
 
+    /**
+     * Sanitize special bash characters
+     *
+     * @param unsanitized string to be sanitized
+     * @return sanitized string
+     */
     protected String sanitizeString(String unsanitized) {
         return unsanitized.replaceAll(REPLACEMENT_REGEX, "\\\\$1");
     }
+
+    /**
+     * check if domain could contain some sort of bash injection
+     *
+     * @param domain Domain to be checked
+     * @return true if domain could be malicious
+     */
+
+    protected boolean checkIfDomainNameIsMalicious(String domain) {
+        return domain.contains(" ");
+    }
+
 }

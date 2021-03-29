@@ -11,8 +11,7 @@ COPY target/quarkus-app app-folder
 
 ADD s6-fastjar/ /etc/services.d
 
-EXPOSE 8080
-
+EXPOSE 8221
 
 
 #CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

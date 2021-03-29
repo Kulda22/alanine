@@ -1,7 +1,7 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
-import cz.cvut.fel.kolovjan.exception.PluginException;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 
@@ -22,7 +22,7 @@ public class VersionCommand extends Command {
         if (returnWrapper.getExitValue() == 0) {
             return new CommandResponse(true, returnWrapper.getOutput());
         } else {
-            throw new PluginException(returnWrapper.getErrorOutput());
+            throw new AlanineException(returnWrapper.getErrorOutput());
         }
     }
 }

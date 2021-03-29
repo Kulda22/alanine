@@ -67,5 +67,3 @@ jobs:
       - name: Push manifest
         run: |
           docker manifest push kulda22/alanine:dev
-
-

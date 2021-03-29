@@ -1,8 +1,8 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.exception.PiholeAlreadyEnabledException;
-import cz.cvut.fel.kolovjan.exception.PluginException;
 import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +35,11 @@ public class EnableCommand extends Command {
 
                 throw new PiholeAlreadyEnabledException();
             } else {
-                log.error("unknown output of disable : {} ",returnWrapper.getErrorOutput());
-                throw new PluginException("unknown output : " + returnWrapper.getErrorOutput());
+                log.error("unknown output of ebale : {} ", returnWrapper.getErrorOutput());
+                throw new AlanineException("unknown output : " + returnWrapper.getErrorOutput());
             }
         } else {
-            throw new PluginException(returnWrapper.getErrorOutput());
+            throw new AlanineException(returnWrapper.getErrorOutput());
         }
     }
 }

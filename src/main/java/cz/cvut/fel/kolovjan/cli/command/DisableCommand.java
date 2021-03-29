@@ -1,8 +1,8 @@
 package cz.cvut.fel.kolovjan.cli.command;
 
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
+import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.exception.PiholeAlreadyDisabledException;
-import cz.cvut.fel.kolovjan.exception.PluginException;
 import cz.cvut.fel.kolovjan.utils.CommandResponse;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
 import cz.cvut.fel.kolovjan.utils.TimeUnitEnum;
@@ -54,12 +54,12 @@ public class DisableCommand extends Command {
                 /// pihole was already disabled
                 throw new PiholeAlreadyDisabledException();
             } else {
-                log.error("unknown output of disable : " + returnWrapper.getErrorOutput());
-                throw new PluginException("unknown output : " + returnWrapper.getErrorOutput());
+                log.error("unknown output of disable : {}", returnWrapper.getErrorOutput());
+                throw new AlanineException("unknown output : " + returnWrapper.getErrorOutput());
 
             }
         } else {
-            throw new PluginException(returnWrapper.getErrorOutput());
+            throw new AlanineException(returnWrapper.getErrorOutput());
         }
     }
 }

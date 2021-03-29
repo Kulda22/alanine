@@ -33,8 +33,6 @@ public class CommandController {
 
     @HEAD
     public Response hearthBeat() {
-
-        log.error(version);
         return Response.ok().build();
     }
 

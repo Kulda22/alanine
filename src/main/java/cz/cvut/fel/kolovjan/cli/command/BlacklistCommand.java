@@ -51,7 +51,7 @@ public class BlacklistCommand extends Command {
             if (executorReturnWrapper.getOutput().contains("[i] Adding ")) {
                 return new CommandResponse(true, domain + " successfully added to blacklist");
                 /// already exists in blacklist, no need to add! || already exists in whitelist, no need to add!
-            } else if (executorReturnWrapper.getOutput().matches("^.*already exists in (blacklist|whitelist).*\\n")) {
+            } else if (executorReturnWrapper.getOutput().contains("already exists in")) {
                 /// we remove [i], because there is no need for it.
                 throw new DomainNameAlreadyInDatabaseException(executorReturnWrapper.getOutput().replace("[i]", ""));
             } else if (executorReturnWrapper.getOutput().contains("is not a valid argument or domain name!")) {

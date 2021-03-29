@@ -23,7 +23,7 @@ public class RestartDnsCommand extends Command {
     public CommandResponse execute() {
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole restartdns");
         if (executorReturnWrapper.getExitValue() == 0) {
-            return new CommandResponse(true, "restart completed successfully");
+            return new CommandResponse(true, "Restart completed successfully");
         } else {
             String msg = "DNS Restart failed with return code: " + executorReturnWrapper.getExitValue() + " and error output :" + executorReturnWrapper
                     .getErrorOutput();

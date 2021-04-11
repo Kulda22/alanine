@@ -74,14 +74,13 @@ jobs:
       - name: Push manifest
         run: |
           docker manifest push kulda22/alanine:dev
-      - name: Make release
-        uses: "marvinpinto/action-automatic-releases@latest"
-          with:
-            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-            automatic_release_tag: "latest"
-            draft: true
-            title: "Development Build"
-            files: |
-              artifacts/alanine.tar.xz
-              artifacts/alanine-amd64-runner
-              artifacts/alanine-arm64-runner
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          draft: true
+          title: "Development Build"
+          files: |
+            artifacts/alanine.tar.xz
+            artifacts/alanine-amd64-runner
+            artifacts/alanine-arm64-runner

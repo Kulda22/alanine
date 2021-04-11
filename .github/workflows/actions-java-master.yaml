@@ -19,9 +19,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Make artifacts folder
+        run: mkdir artifacts
       - name: Build with Maven
         run: mvn -Dquarkus.package.type=fast-jar package
-
+      - name: Create java artifact
+        run: tar -C target -cJf  alanine.tar.xz quarkus-app && cp alanine.tar.xz artifacts/
       - name: Set up Docker Buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v2
@@ -43,6 +46,8 @@ jobs:
         # AMD64 native image
       - name: Create amd64 native binary
         run: mvn package -Pnative -Dquarkus.native.container-build=true
+      - name: Create amd64 artifact
+        run: cp target/*-runner artifacts/alanine-amd64-runner
       - name: build amd64 image
         run: |
           docker buildx  build \
@@ -54,6 +59,8 @@ jobs:
         run: |
           mvn package -Pnative -Dquarkus.native.container-build=true \
           -Dquarkus.native.builder-image=kulda22/alanine:native-builder-arm64
+      - name: Create arm64 artifact
+        run: cp target/*-runner artifacts/alanine-arm64-runner
       - name: Build arm64 docker image
         run: |
           docker buildx  build \
@@ -68,5 +75,14 @@ jobs:
       - name: Push manifest
         run: |
           docker manifest push kulda22/alanine:latest
-
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          draft: true
+          title: "Development Build"
+          files: |
+            artifacts/alanine.tar.xz
+            artifacts/alanine-amd64-runner
+            artifacts/alanine-arm64-runner
 

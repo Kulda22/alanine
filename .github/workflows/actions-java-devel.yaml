@@ -19,7 +19,9 @@ jobs:
           java-version: 11
       - name: Install Docker
         uses: docker-practice/actions-setup-docker@master
-
+        with:
+          docker_buildx: false
+          docker_cli_experimental: false
       - name: Install pihole
         run: docker run -d --name pihole pihole/pihole:latest
 

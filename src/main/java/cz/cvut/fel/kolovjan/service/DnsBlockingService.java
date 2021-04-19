@@ -17,11 +17,11 @@ public class DnsBlockingService {
     private EnableCommand enableCommand;
 
 
-    public CommandResponse enableLogging() {
+    public CommandResponse enableBlocking() {
         return enableCommand.execute();
     }
 
-    public CommandResponse disableLogging(long time, TimeUnitEnum timeUnitEnum) {
+    public CommandResponse disableBlocking(long time, TimeUnitEnum timeUnitEnum) {
         if (time == -1) {
             return disableCommand.execute();
         } else {

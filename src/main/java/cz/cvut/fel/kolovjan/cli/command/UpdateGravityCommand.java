@@ -29,7 +29,7 @@ public class UpdateGravityCommand extends Command {
         if (executorReturnWrapper.getExitValue() == 0) {
 
             if (executorReturnWrapper.getOutput().contains("Swapping databases")) {
-                return new CommandResponse(true, "Gravity dababase updated successfully!");
+                return new CommandResponse(true, "Gravity database updated successfully!");
             } else {
                 log.warn("unknown output of gravity update: " + executorReturnWrapper.getErrorOutput());
                 throw new AlanineException("gravity update may have stumbled across problems, please try to update via web admin or pihole command - unknown output: " + executorReturnWrapper

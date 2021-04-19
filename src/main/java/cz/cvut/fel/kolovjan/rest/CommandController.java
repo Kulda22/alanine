@@ -52,13 +52,13 @@ public class CommandController {
     @PUT
     @Path("/disable")
     public Response disable(@QueryParam("time") @DefaultValue("-1") long time, @QueryParam("unit") @DefaultValue("m") TimeUnitEnum timeUnit) {
-        return Response.ok(dnsBlockingService.disableLogging(time, timeUnit)).build();
+        return Response.ok(dnsBlockingService.disableBlocking(time, timeUnit)).build();
     }
 
     @PUT
     @Path("/enable")
     public Response enable() {
-        return Response.ok(dnsBlockingService.enableLogging()).build();
+        return Response.ok(dnsBlockingService.enableBlocking()).build();
     }
 
     @PUT

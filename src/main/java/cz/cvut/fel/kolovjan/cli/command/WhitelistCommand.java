@@ -58,7 +58,7 @@ public class WhitelistCommand extends Command {
 
         if (executorReturnWrapper.getExitValue() == 0) {
             if (executorReturnWrapper.getOutput().contains("[i] Adding ")) {
-                return new CommandResponse(true, domain + " successfully added to whitelist");
+                return new CommandResponse(true, domain + " successfully added to whitelist!");
                 /// already exists in blacklist, no need to add! || already exists in whitelist, no need to add!
             } else if (executorReturnWrapper.getOutput().contains("already exists in")) {
                 throw new DomainNameAlreadyInDatabaseException(executorReturnWrapper.getOutput().replace("[i]", ""));

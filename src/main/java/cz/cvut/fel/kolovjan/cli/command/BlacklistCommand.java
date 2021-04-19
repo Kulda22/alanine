@@ -49,7 +49,7 @@ public class BlacklistCommand extends Command {
 
         if (executorReturnWrapper.getExitValue() == 0) {
             if (executorReturnWrapper.getOutput().contains("[i] Adding ")) {
-                return new CommandResponse(true, domain + " successfully added to blacklist");
+                return new CommandResponse(true, domain + " successfully added to blacklist!");
                 /// already exists in blacklist, no need to add! || already exists in whitelist, no need to add!
             } else if (executorReturnWrapper.getOutput().contains("already exists in")) {
                 /// we remove [i], because there is no need for it.

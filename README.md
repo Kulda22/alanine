@@ -77,3 +77,11 @@ To be done.
 ## Contributing
 
 Any kind of PR, wishes for feature or feedback is welcome!
+
+## Versions
+**X.Y.Z**
+
+- **Z** - Bugfixes, small changes that doesn't change the REST API structure.
+- **Y** - Bigger change in request/response structure - for example adding or removing parameter. 
+- **X** - Adding/removing endpoint.
+

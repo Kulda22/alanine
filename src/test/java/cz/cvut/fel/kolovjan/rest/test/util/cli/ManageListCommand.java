@@ -41,7 +41,8 @@ public class ManageListCommand extends Command {
     private boolean domainExists(String domain, String command) {
 
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole " + command + " -l");
-
+        log.info("looking for {} with command {}", domain, command);
+        log.info(executorReturnWrapper.getOutput());
         if (executorReturnWrapper.getExitValue() == 0) {
             return executorReturnWrapper.getOutput().contains(domain);
         } else {

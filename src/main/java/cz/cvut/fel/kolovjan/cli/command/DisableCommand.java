@@ -39,7 +39,8 @@ public class DisableCommand extends Command {
          */
 
     public CommandResponse execute(long time, TimeUnitEnum timeUnit) {
-        return executeCommand(PIHOLE_DISABLE_COMMAND + time + timeUnit.getTimeUnit(), "Pi-hole Disabled for " + time + timeUnit);
+        return executeCommand(PIHOLE_DISABLE_COMMAND + time + timeUnit.getTimeUnit(), "Pi-hole Disabled for " + time + " " + timeUnit
+                .getHumanOutput());
     }
 
     private CommandResponse executeCommand(String command, String successfulMessage) {

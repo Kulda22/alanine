@@ -5,25 +5,32 @@ import cz.cvut.fel.kolovjan.exception.AlanineException;
 public enum TimeUnitEnum {
     MINUTES("m"),
     SECONDS("s");
-    private final String TimeUnit;
+    private final String timeUnit;
 
     TimeUnitEnum(String timeUnit) {
-        TimeUnit = timeUnit;
+        this.timeUnit = timeUnit;
     }
 
     public String getTimeUnit() {
-        return TimeUnit;
+        return timeUnit;
+    }
+
+    public String getHumanOutput() {
+        if (timeUnit.equals("m")) {
+            return "minutes";
+        } else {
+            return "seconds";
+        }
     }
 
     @Override
     public String toString() {
         return "TimeUnitEnum{" +
-                "TimeUnit='" + TimeUnit + '\'' +
+                "TimeUnit='" + timeUnit + '\'' +
                 '}';
     }
 
-    public static TimeUnitEnum fromString(String s)
-    {
+    public static TimeUnitEnum fromString(String s) {
         if(s.equals("s")){
             return TimeUnitEnum.SECONDS;
         }else if (s.equals("m")){

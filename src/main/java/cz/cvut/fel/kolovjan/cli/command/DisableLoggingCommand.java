@@ -40,7 +40,8 @@ public class DisableLoggingCommand extends Command {
 
     public CommandResponse execute(long time) {
         CommandResponse toRet = execute();
+
         reenabler.enableAfter(time);
-        return toRet;
+        return new CommandResponse(toRet.isSuccessful(), "Logging disabled for " + time + " minutes");
     }
 }

@@ -224,7 +224,6 @@ class CommandControllerTest {
 
     @Test
     void whitelistWildcardDomain() {
-        log.info("starting whitelistWildcardDomain");
 
         String domain = generateRandomDomain();
         given().queryParam("domain", domain)
@@ -242,7 +241,6 @@ class CommandControllerTest {
 
         manageListService.removeDomainFromWhitelist(wildcardedDomain, ListType.REGEX);
         Assertions.assertFalse(manageListService.isDomainInWhitelist(wildcardedDomain, ListType.REGEX), "clean up was not successful !");
-        log.info("ending whitelistWildcardDomain");
 
     }
 
@@ -288,7 +286,6 @@ class CommandControllerTest {
     @Test
     void blacklistWildcardDomain() {
 
-        log.info("starting blacklistWildcardDomain");
         String domain = generateRandomDomain();
         given().queryParam("domain", domain)
                .when()
@@ -305,7 +302,6 @@ class CommandControllerTest {
 
         manageListService.removeDomainFromBlacklist(wildcardedDomain, ListType.REGEX);
         Assertions.assertFalse(manageListService.isDomainInBlacklist(wildcardedDomain, ListType.REGEX), "clean up was not successful !");
-        log.info("ending blacklistWildcardDomain");
 
     }
 
@@ -331,7 +327,7 @@ class CommandControllerTest {
     }
 
     private String domainToWildcard(String domain) {
-        return "(^|\\.)" + domain.replace(".", "\\.") + "$";
+        return "(\\.|^)" + domain.replace(".", "\\.") + "$";
 
     }
 

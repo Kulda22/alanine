@@ -30,7 +30,7 @@ public class DisableCommand extends Command {
      * @return
      */
     public CommandResponse execute() {
-        return executeCommand(PIHOLE_DISABLE_COMMAND);
+        return executeCommand(PIHOLE_DISABLE_COMMAND, "Pi-hole Disabled!");
     }
 
         /*
@@ -39,16 +39,16 @@ public class DisableCommand extends Command {
          */
 
     public CommandResponse execute(long time, TimeUnitEnum timeUnit) {
-        return executeCommand(PIHOLE_DISABLE_COMMAND + time + timeUnit.getTimeUnit());
+        return executeCommand(PIHOLE_DISABLE_COMMAND + time + timeUnit.getTimeUnit(), "Pi-hole Disabled for " + time + timeUnit);
     }
 
-    private CommandResponse executeCommand(String command) {
+    private CommandResponse executeCommand(String command, String successfulMessage) {
         ExecutorReturnWrapper returnWrapper = commandExecutor.execute(command);
 
         /// no error execution
         if (returnWrapper.getExitValue() == 0) {
             if (returnWrapper.getOutput().contains("Pi-hole Disabled")) {
-                return new CommandResponse(true, "Pi-hole Disabled");
+                return new CommandResponse(true, successfulMessage);
 
             } else if (returnWrapper.getOutput().contains("Blocking already disabled, nothing to do")) {
                 /// pihole was already disabled

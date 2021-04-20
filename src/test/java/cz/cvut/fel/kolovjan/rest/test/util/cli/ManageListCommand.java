@@ -1,6 +1,7 @@
-package cz.cvut.fel.kolovjan.cli.command;
+package cz.cvut.fel.kolovjan.rest.test.util.cli;
 
 
+import cz.cvut.fel.kolovjan.cli.command.Command;
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
 import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.exception.InvalidDomainNameException;

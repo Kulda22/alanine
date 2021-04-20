@@ -1,7 +1,12 @@
-package cz.cvut.fel.kolovjan.rest;
+package cz.cvut.fel.kolovjan.rest.test;
 
 import cz.cvut.fel.kolovjan.exception.PiholeAlreadyEnabledException;
-import cz.cvut.fel.kolovjan.service.*;
+import cz.cvut.fel.kolovjan.rest.CommandController;
+import cz.cvut.fel.kolovjan.rest.test.util.cli.ManageListService;
+import cz.cvut.fel.kolovjan.service.DnsBlockingService;
+import cz.cvut.fel.kolovjan.service.LoggingService;
+import cz.cvut.fel.kolovjan.service.StatusService;
+import cz.cvut.fel.kolovjan.service.VersionService;
 import cz.cvut.fel.kolovjan.utils.ListType;
 import cz.cvut.fel.kolovjan.utils.TimeUnitEnum;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -14,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
+import java.util.Map;
 import java.util.Random;
 
 import static io.restassured.RestAssured.given;
@@ -33,7 +39,7 @@ class CommandControllerTest {
     @Inject
     LoggingService loggingService;
     @Inject
-    DomainService domainService;
+    ManageListService manageListService;
     @Inject
     VersionService versionService;
 
@@ -56,6 +62,15 @@ class CommandControllerTest {
 
     @Test
     void list() {
+
+        Map<String, Boolean> statusMap = statusService.getStatusMap();
+
+        when().get("/status")
+              .then()
+              .statusCode(200)
+              .body("isBlockingEnabled", Matchers.is(statusMap.get("isBlockingEnabled")))
+              .body("isDNSListening", Matchers.is(statusMap.get("isDNSListening")))
+              .body("isLoggingEnabled", Matchers.is(statusMap.get("isLoggingEnabled")));
     }
 
     @Test
@@ -181,10 +196,10 @@ class CommandControllerTest {
                .body("message", Matchers.is(domain + " successfully added to whitelist!"));
 
 
-        Assertions.assertTrue(domainService.isDomainInWhitelist(domain, ListType.EXACT), "domain not in whitelist !");
+        Assertions.assertTrue(manageListService.isDomainInWhitelist(domain, ListType.EXACT), "domain not in whitelist !");
 
-        domainService.removeDomainFromWhitelist(domain, ListType.EXACT);
-        Assertions.assertFalse(domainService.isDomainInWhitelist(domain, ListType.EXACT), "clean up was not successful !");
+        manageListService.removeDomainFromWhitelist(domain, ListType.EXACT);
+        Assertions.assertFalse(manageListService.isDomainInWhitelist(domain, ListType.EXACT), "clean up was not successful !");
 
     }
 
@@ -200,18 +215,33 @@ class CommandControllerTest {
                .body("message", Matchers.is(domain + " successfully added to whitelist!"));
 
 
-        Assertions.assertTrue(domainService.isDomainInWhitelist(domain, ListType.REGEX), "domain not in whitelist !");
+        Assertions.assertTrue(manageListService.isDomainInWhitelist(domain, ListType.REGEX), "domain not in whitelist !");
 
-        domainService.removeDomainFromWhitelist(domain, ListType.REGEX);
-        Assertions.assertFalse(domainService.isDomainInWhitelist(domain, ListType.REGEX), "clean up was not successful !");
+        manageListService.removeDomainFromWhitelist(domain, ListType.REGEX);
+        Assertions.assertFalse(manageListService.isDomainInWhitelist(domain, ListType.REGEX), "clean up was not successful !");
 
     }
 
-    // TODO
-//    @Test
-//    void whitelistWildcardDomain() {
-//
-//    }
+    @Test
+    void whitelistWildcardDomain() {
+        String domain = generateRandomDomain();
+        given().queryParam("domain", domain)
+               .when()
+               .put("/whitelist/wildcard")
+               .then()
+               .statusCode(200)
+               .body("message", Matchers.is(domain + " successfully added to whitelist!"));
+
+
+        String wildcardedDomain = domainToWildcard(domain);
+
+        Assertions.assertTrue(manageListService.isDomainInWhitelist(wildcardedDomain, ListType.REGEX), "domain not in whitelist !");
+
+
+        manageListService.removeDomainFromWhitelist(wildcardedDomain, ListType.REGEX);
+        Assertions.assertFalse(manageListService.isDomainInWhitelist(wildcardedDomain, ListType.REGEX), "clean up was not successful !");
+
+    }
 
     @Test
     void blacklistDomain() {
@@ -225,10 +255,10 @@ class CommandControllerTest {
                .body("message", Matchers.is(domain + " successfully added to blacklist!"));
 
 
-        Assertions.assertTrue(domainService.isDomainInBlacklist(domain, ListType.EXACT), "domain not in blacklist !");
+        Assertions.assertTrue(manageListService.isDomainInBlacklist(domain, ListType.EXACT), "domain not in blacklist !");
 
-        domainService.removeDomainFromBlacklist(domain, ListType.EXACT);
-        Assertions.assertFalse(domainService.isDomainInBlacklist(domain, ListType.EXACT), "clean up was not successful !");
+        manageListService.removeDomainFromBlacklist(domain, ListType.EXACT);
+        Assertions.assertFalse(manageListService.isDomainInBlacklist(domain, ListType.EXACT), "clean up was not successful !");
 
     }
 
@@ -244,17 +274,34 @@ class CommandControllerTest {
                .body("message", Matchers.is(domain + " successfully added to blacklist!"));
 
 
-        Assertions.assertTrue(domainService.isDomainInBlacklist(domain, ListType.REGEX), "domain not in blacklist !");
+        Assertions.assertTrue(manageListService.isDomainInBlacklist(domain, ListType.REGEX), "domain not in blacklist !");
 
-        domainService.removeDomainFromBlacklist(domain, ListType.REGEX);
-        Assertions.assertFalse(domainService.isDomainInBlacklist(domain, ListType.REGEX), "clean up was not successful !");
+        manageListService.removeDomainFromBlacklist(domain, ListType.REGEX);
+        Assertions.assertFalse(manageListService.isDomainInBlacklist(domain, ListType.REGEX), "clean up was not successful !");
 
     }
 
     // TODO
-//    @Test
-//    void blacklistWildcardDomain() {
-//    }
+    @Test
+    void blacklistWildcardDomain() {
+        String domain = generateRandomDomain();
+        given().queryParam("domain", domain)
+               .when()
+               .put("/blacklist/wildcard")
+               .then()
+               .statusCode(200)
+               .body("message", Matchers.is(domain + " successfully added to blacklist!"));
+
+
+        String wildcardedDomain = domainToWildcard(domain);
+
+        Assertions.assertTrue(manageListService.isDomainInBlacklist(wildcardedDomain, ListType.REGEX), "domain not in blacklist !");
+
+
+        manageListService.removeDomainFromBlacklist(wildcardedDomain, ListType.REGEX);
+        Assertions.assertFalse(manageListService.isDomainInBlacklist(wildcardedDomain, ListType.REGEX), "clean up was not successful !");
+
+    }
 
     @Test
     void getServerVersion() {
@@ -266,7 +313,7 @@ class CommandControllerTest {
         String domain;
         while (true) {
             domain = "test" + random.nextInt(10000) + ".cz";
-            if (!domainService.isDomainInAnyList(domain)) {
+            if (!manageListService.isDomainInAnyList(domain)) {
                 return domain;
             }
         }
@@ -276,4 +323,10 @@ class CommandControllerTest {
     private String generateRegexRandomDomain() {
         return "(^)" + generateRandomDomain();
     }
+
+    private String domainToWildcard(String domain) {
+        return "(^|\\.)" + domain.replace(".", "\\.") + "$";
+
+    }
+
 }

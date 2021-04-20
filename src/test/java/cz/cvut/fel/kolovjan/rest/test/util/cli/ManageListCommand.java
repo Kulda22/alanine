@@ -44,7 +44,12 @@ public class ManageListCommand extends Command {
         log.info("looking for {} with command {}", domain, command);
         log.info(executorReturnWrapper.getOutput());
         if (executorReturnWrapper.getExitValue() == 0) {
-            return executorReturnWrapper.getOutput().contains(domain);
+            boolean toRet = executorReturnWrapper.getOutput().contains(domain);
+            if (!toRet) {
+                log.info("not successful");
+
+            }
+            return toRet;
         } else {
             throw new AlanineException("Nonzero return code from domain list - output is " + executorReturnWrapper.getOutput() + " error output is " + executorReturnWrapper
                     .getErrorOutput());

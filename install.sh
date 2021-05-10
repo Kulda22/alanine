@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # This install script is heavily inspired from Pi-hole install script (https://github.com/pi-hole/pi-hole/blob/master/automated%20install/basic-install.sh).
 #
 # Installing via docker is the preffered way of installing Alanine.
@@ -6,8 +8,6 @@
 # Prerequsities - if not on linux ARM64/AMD64 arch you have to have Java 8 or 11+ installed.
 # Run this script :
 # sudo ./install.sh
-#
-#
 
 is_command() {
   # Checks for existence of string passed in as only function argument.

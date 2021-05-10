@@ -1,8 +1,6 @@
 name: buildx-java-master
 
 on:
-  pull_request:
-    branches: master
   push:
     branches: master
     tags:

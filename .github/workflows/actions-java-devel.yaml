@@ -1,8 +1,6 @@
 name: buildx-java-devel
 
 on:
-  pull_request:
-    branches: development
   push:
     branches: development
     tags:

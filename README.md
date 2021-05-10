@@ -1,6 +1,8 @@
 # Alanine Server
 
-    
+## IMPORTANT : FEEDBACK
+
+Because Alanine is still new project,  we are in serious need of your feedback. Please tell us your first impresion via this [form](https://forms.gle/AU2TKsVE4DVNAxHh6) after day or two of use.   
 
 ## Overview
 
@@ -20,7 +22,7 @@ The preferred way is to install docker container, since it is easier to manage a
 
 ### Docker install
 
-Alanine docker image extends official Pi-hole docker image (that mean's in one docker you have your standart Pi-hole and Alanine server), so should you use same parameters/script as you do with official docker image. Just add `-p 8221:8221` and use `kulda22/alanine` as image.
+Alanine docker image extends official Pi-hole docker image (that means in one docker you have your standart Pi-hole and Alanine server), so should you use same parameters/script as you do with official docker image. Just add `-p 8221:8221` and use `kulda22/alanine` as an image.
 
 Simple example of bash command to create and run Alanine in docker:
 
@@ -45,13 +47,11 @@ Simple example of bash command to create and run Alanine in docker:
         kulda22/alanine:latest
 ```
 
-### Script install
+### Manual / Script install
 
-With install script things get difficult. Again, please consider using docker.
+With install script things get a little more difficult. Again, please consider using docker.
 
-You can use script to install Alanine, or you can install it manually. You only have to download the right file from https://github.com/Kulda22/alanine/releases/latest, change file permission and install cron to run the file after boot.
-
- If you have AMD64/ARM64 architecture download right binary file and run it by `/<path to binary/alanine-*-runner`, if not use `java -jar /<path to jar>/quarkus-run.jar`.
+You can use script to install Alanine, or you can install it manually. You only have to download the right file from https://github.com/Kulda22/alanine/releases/latest, change file permissions and install cron to run the file after boot. If you have AMD64/ARM64 architecture download right binary file and add to cron `@reboot /<path to binary/alanine-*-runner`, if not use `@reboot java -jar /<path to jar>/quarkus-run.jar`.
 
 
 
@@ -62,6 +62,7 @@ If you are running linux ARM64 or AMD64 architecture you only need to have Pi-ho
 
 For any other, java 8 or 11+ is a necessity along with Pi-hole.
 
+You can verify your Pi-hole instalation by running `$ pihole -v`
 
 #### Installation
 
@@ -72,6 +73,12 @@ For uninstall just use uninstall script (`$ sudo ./uninstall`)
 
 ### Update
 Sorry, but we chose the easiest way to update - just uninstall and install again!
+
+
+## Browser plugin 
+Alanine plugin is web browser plugin that uses this server. 
+See [plugin repository](https://github.com/Kulda22/alanine-plugin)
+
 
 ## Open api specification
 To be done. 
@@ -87,4 +94,5 @@ Any kind of PR, wishes for feature or feedback is welcome!
 - **Z** - Bugfixes, small changes that doesn't change the REST API structure.
 - **Y** - Bigger change in request/response structure - for example adding or removing parameter. 
 - **X** - Adding/removing endpoint.
+
 

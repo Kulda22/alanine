@@ -38,6 +38,13 @@ public class DisableCommand extends Command {
         return already disabled. But after given time the pihole will enable itself ! what a nice feature !
          */
 
+    /**
+     * Disable Pi-hole logging for given time.
+     *
+     * @param time     Time to disable for.
+     * @param timeUnit Timeunit in which time will be disabled
+     * @return
+     */
     public CommandResponse execute(long time, TimeUnitEnum timeUnit) {
         return executeCommand(PIHOLE_DISABLE_COMMAND + time + timeUnit.getTimeUnit(), "Pi-hole Disabled for " + time + " " + timeUnit
                 .getHumanOutput());

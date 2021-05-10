@@ -2,12 +2,12 @@ package cz.cvut.fel.kolovjan.rest.test;
 
 import cz.cvut.fel.kolovjan.exception.PiholeAlreadyEnabledException;
 import cz.cvut.fel.kolovjan.rest.CommandController;
+import cz.cvut.fel.kolovjan.rest.test.util.ListType;
 import cz.cvut.fel.kolovjan.rest.test.util.cli.ManageListService;
 import cz.cvut.fel.kolovjan.service.DnsBlockingService;
 import cz.cvut.fel.kolovjan.service.LoggingService;
 import cz.cvut.fel.kolovjan.service.StatusService;
 import cz.cvut.fel.kolovjan.service.VersionService;
-import cz.cvut.fel.kolovjan.utils.ListType;
 import cz.cvut.fel.kolovjan.utils.TimeUnitEnum;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;

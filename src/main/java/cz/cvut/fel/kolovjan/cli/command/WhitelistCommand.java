@@ -22,12 +22,9 @@ public class WhitelistCommand extends Command {
     }
 
     /**
-     * check if domain could contain some sort of injection
-     * <p>
-     * <p>
-     * bad characters  ! ( ) | > < ; & \
+     * Add domain to whitelist
      *
-     * @param domain
+     * @param domain Domain to be whitelisted
      * @return
      */
 
@@ -38,10 +35,22 @@ public class WhitelistCommand extends Command {
 
     }
 
+    /**
+     * Add regex domain to whitelist
+     *
+     * @param domain Domain to be whitelisted
+     * @return
+     */
     public CommandResponse whitelistRegexDomain(String domain) {
         return execute("pihole --white-regex " + domain, domain);
     }
 
+    /**
+     * Wildcard domain and add it to whitelist.
+     *
+     * @param domain Domain to be whitelisted
+     * @return
+     */
     public CommandResponse whitelistWildcardDomain(String domain) {
         return execute("pihole --white-wild " + domain, domain);
     }

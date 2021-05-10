@@ -21,7 +21,11 @@ public class UpdateGravityCommand extends Command {
         super(null);
     }
 
-    /// todo add timer ?
+    /**
+     * Run Gravity update
+     *
+     * @return
+     */
     public CommandResponse execute() {
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole -g");
 

@@ -70,6 +70,9 @@ Just download the install script (`install.sh`) and run `$ sudo ./install.sh`.
 
 For uninstall just use uninstall script (`$ sudo ./uninstall`)
 
+### Update
+Sorry, but we chose the easiest way to update - just uninstall and install again!
+
 ## Open api specification
 To be done. 
 

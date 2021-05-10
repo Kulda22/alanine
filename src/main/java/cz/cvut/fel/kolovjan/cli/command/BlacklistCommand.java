@@ -21,7 +21,12 @@ public class BlacklistCommand extends Command {
 
     }
 
-
+    /**
+     * Blacklist exact domain
+     *
+     * @param domain Domain to be blocked
+     * @return
+     */
     public CommandResponse blacklistExactDomain(String domain) {
 
 
@@ -29,17 +34,28 @@ public class BlacklistCommand extends Command {
 
     }
 
+    /**
+     * Blacklist regex form of domain
+     *
+     * @param domain Domain to be blocked
+     * @return
+     */
     public CommandResponse blacklistRegexDomain(String domain) {
         return execute("pihole --regex " + domain, domain);
     }
 
+    /**
+     * Wildcard and blacklist domain
+     *
+     * @param domain Domain to be blocked
+     * @return
+     */
     public CommandResponse blacklistWildcardDomain(String domain) {
         return execute("pihole --wild " + domain, domain);
     }
 
     private CommandResponse execute(String command, String domain) {
         if (checkIfDomainNameIsMalicious(domain)) {
-            // todo better message ? or security through obscurity
             log.warn("Domain may be malicious");
             throw new InvalidDomainNameException(domain);
         }

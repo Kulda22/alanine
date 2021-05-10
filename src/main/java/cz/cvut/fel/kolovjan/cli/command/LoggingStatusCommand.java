@@ -18,6 +18,11 @@ public class LoggingStatusCommand extends Command {
         super(commandExecutor);
     }
 
+    /**
+     * Find out if logging is enabled
+     *
+     * @return
+     */
     public LoggingStatusCommandResponse execute() {
         ExecutorReturnWrapper loggingEnabledReturnWrapper = commandExecutor.execute("cat /etc/pihole/setupVars.conf");
         if (loggingEnabledReturnWrapper.getExitValue() == 0) {

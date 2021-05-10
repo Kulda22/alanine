@@ -27,6 +27,11 @@ public class DisableLoggingCommand extends Command {
         super();
     }
 
+    /**
+     * Disable Pi-hole logging indefinitely
+     *
+     * @return Result with message
+     */
     public CommandResponse execute() {
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole logging off noflush");
         /// no error and correct message
@@ -38,6 +43,12 @@ public class DisableLoggingCommand extends Command {
         }
     }
 
+    /**
+     * Disable Pi-hole logging for given time in minutes
+     *
+     * @param time time to disable in minutes
+     * @return Result with message
+     */
     public CommandResponse execute(long time) {
         CommandResponse toRet = execute();
 

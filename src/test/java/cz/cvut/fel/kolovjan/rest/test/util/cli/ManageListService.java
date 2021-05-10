@@ -1,6 +1,6 @@
 package cz.cvut.fel.kolovjan.rest.test.util.cli;
 
-import cz.cvut.fel.kolovjan.utils.ListType;
+import cz.cvut.fel.kolovjan.rest.test.util.ListType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

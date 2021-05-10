@@ -22,6 +22,11 @@ public class EnableCommand extends Command {
         super(commandExecutor);
     }
 
+    /**
+     * Enable Pi-hole blocking
+     *
+     * @return
+     */
     public CommandResponse execute() {
 
         ExecutorReturnWrapper returnWrapper = commandExecutor.execute("pihole enable");

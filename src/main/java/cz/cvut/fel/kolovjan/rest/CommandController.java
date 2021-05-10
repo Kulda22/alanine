@@ -13,6 +13,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * Main point of whole app. This class provides REST API.
+ */
 @Path("/alanine")
 @Slf4j
 @RequiredArgsConstructor

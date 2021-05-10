@@ -19,6 +19,11 @@ public class StatusCommand extends Command {
         super(null);
     }
 
+    /**
+     * Get status of Pi-hole.
+     *
+     * @return
+     */
     public StatusCommandResponse execute() {
         ExecutorReturnWrapper statusReturnWrapper = commandExecutor.execute("pihole status");
         if (statusReturnWrapper.getExitValue() == 0) {

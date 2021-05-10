@@ -5,12 +5,15 @@ import cz.cvut.fel.kolovjan.cli.command.Command;
 import cz.cvut.fel.kolovjan.cli.executor.CommandExecutorInterface;
 import cz.cvut.fel.kolovjan.exception.AlanineException;
 import cz.cvut.fel.kolovjan.exception.InvalidDomainNameException;
+import cz.cvut.fel.kolovjan.rest.test.util.ListType;
 import cz.cvut.fel.kolovjan.utils.ExecutorReturnWrapper;
-import cz.cvut.fel.kolovjan.utils.ListType;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
 
+/**
+ * This class is used in test to check if domain exists in list. Or to remove it.
+ */
 @Slf4j
 @ApplicationScoped
 public class ManageListCommand extends Command {
@@ -68,7 +71,6 @@ public class ManageListCommand extends Command {
 
     private void removeDomainFromList(String domain, String flag) {
         if (checkIfDomainNameIsMalicious(domain)) {
-            // todo better message ? or security through obscurity
             log.error("Domain may be malicious");
             throw new InvalidDomainNameException(domain);
         }

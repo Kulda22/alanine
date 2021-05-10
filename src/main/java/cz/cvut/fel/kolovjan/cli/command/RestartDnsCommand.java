@@ -20,6 +20,11 @@ public class RestartDnsCommand extends Command {
         super();
     }
 
+    /**
+     * Restart DNS Server
+     *
+     * @return
+     */
     public CommandResponse execute() {
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole restartdns");
         if (executorReturnWrapper.getExitValue() == 0) {

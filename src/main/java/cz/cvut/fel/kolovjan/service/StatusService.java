@@ -21,18 +21,18 @@ public class StatusService {
     private LoggingStatusCommand loggingStatusCommand;
 
 /// to do - chain it ? https://www.baeldung.com/java-completablefuture
-    public Map<String, Object> getStatusMap() {
-        HashMap<String, Object> map = new HashMap<>();
+public Map<String, Boolean> getStatusMap() {
+    HashMap<String, Boolean> map = new HashMap<>();
 
-        CompletableFuture<StatusCommandResponse> statusFuture = CompletableFuture.supplyAsync(() -> statusCommand.execute());
-        CompletableFuture<LoggingStatusCommandResponse> loggingStatusFuture = CompletableFuture.supplyAsync(() -> loggingStatusCommand
-                .execute());
+    CompletableFuture<StatusCommandResponse> statusFuture = CompletableFuture.supplyAsync(() -> statusCommand.execute());
+    CompletableFuture<LoggingStatusCommandResponse> loggingStatusFuture = CompletableFuture.supplyAsync(() -> loggingStatusCommand
+            .execute());
 
 
-        try {
+    try {
 
-            map.put("isDNSListening", statusFuture.get().isDNSListening());
-            map.put("isBlockingEnabled", statusFuture.get().isBlockingEnabled());
+        map.put("isDNSListening", statusFuture.get().isDNSListening());
+        map.put("isBlockingEnabled", statusFuture.get().isBlockingEnabled());
             map.put("isLoggingEnabled", loggingStatusFuture.get().isLoggingEnabled());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

@@ -38,5 +38,4 @@ public class DomainService {
     public CommandResponse blacklistRegexDomain(String domainName) {
         return blacklistCommand.blacklistRegexDomain(domainName);
     }
-
 }

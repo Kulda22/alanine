@@ -22,6 +22,11 @@ public class EnableLoggingCommand extends Command {
         super(null);
     }
 
+    /**
+     * Enable Pi-hole logging
+     *
+     * @return
+     */
     public CommandResponse execute() {
         ExecutorReturnWrapper executorReturnWrapper = commandExecutor.execute("pihole logging on");
         if (executorReturnWrapper.getOutput().contains("Logging has been enabled!")) {

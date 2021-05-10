@@ -13,6 +13,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * Main point of whole app. This class provides REST API.
+ */
 @Path("/alanine")
 @Slf4j
 @RequiredArgsConstructor
@@ -52,13 +55,13 @@ public class CommandController {
     @PUT
     @Path("/disable")
     public Response disable(@QueryParam("time") @DefaultValue("-1") long time, @QueryParam("unit") @DefaultValue("m") TimeUnitEnum timeUnit) {
-        return Response.ok(dnsBlockingService.disableLogging(time, timeUnit)).build();
+        return Response.ok(dnsBlockingService.disableBlocking(time, timeUnit)).build();
     }
 
     @PUT
     @Path("/enable")
     public Response enable() {
-        return Response.ok(dnsBlockingService.enableLogging()).build();
+        return Response.ok(dnsBlockingService.enableBlocking()).build();
     }
 
     @PUT

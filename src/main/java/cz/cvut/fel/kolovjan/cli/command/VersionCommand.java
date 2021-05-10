@@ -16,7 +16,11 @@ public class VersionCommand extends Command {
     public VersionCommand() {
     }
 
-
+    /**
+     * Get version of Pi-hole
+     *
+     * @return
+     */
     public CommandResponse execute() {
         ExecutorReturnWrapper returnWrapper = commandExecutor.execute("pihole version -c");
         if (returnWrapper.getExitValue() == 0) {

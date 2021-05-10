@@ -8,6 +8,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 
+/**
+ * This class is used for disabling logging for given time.
+ */
 @ApplicationScoped
 @Slf4j
 public class LoggingReenabler {
@@ -15,13 +18,16 @@ public class LoggingReenabler {
 
     private LocalDateTime enableTime = LocalDateTime.MAX;
 
-    /// TODO add some check on startup - or remove option to turn off indefinitely
-
     @Inject
     public LoggingReenabler(EnableLoggingCommand enableLoggingCommand) {
         this.enableLoggingCommand = enableLoggingCommand;
     }
 
+    /**
+     * Set this class to enable logging after given time.
+     *
+     * @param minutes time until enabled
+     */
     public void enableAfter(long minutes) {
         enableTime = LocalDateTime.now().plusMinutes(minutes);
 

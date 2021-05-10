@@ -21,7 +21,12 @@ public class BlacklistCommand extends Command {
 
     }
 
-
+    /**
+     * Blacklist exact domain
+     *
+     * @param domain Domain to be blocked
+     * @return
+     */
     public CommandResponse blacklistExactDomain(String domain) {
 
 
@@ -29,17 +34,28 @@ public class BlacklistCommand extends Command {
 
     }
 
+    /**
+     * Blacklist regex form of domain
+     *
+     * @param domain Domain to be blocked
+     * @return
+     */
     public CommandResponse blacklistRegexDomain(String domain) {
         return execute("pihole --regex " + domain, domain);
     }
 
+    /**
+     * Wildcard and blacklist domain
+     *
+     * @param domain Domain to be blocked
+     * @return
+     */
     public CommandResponse blacklistWildcardDomain(String domain) {
         return execute("pihole --wild " + domain, domain);
     }
 
     private CommandResponse execute(String command, String domain) {
         if (checkIfDomainNameIsMalicious(domain)) {
-            // todo better message ? or security through obscurity
             log.warn("Domain may be malicious");
             throw new InvalidDomainNameException(domain);
         }
@@ -49,7 +65,7 @@ public class BlacklistCommand extends Command {
 
         if (executorReturnWrapper.getExitValue() == 0) {
             if (executorReturnWrapper.getOutput().contains("[i] Adding ")) {
-                return new CommandResponse(true, domain + " successfully added to blacklist");
+                return new CommandResponse(true, domain + " successfully added to blacklist!");
                 /// already exists in blacklist, no need to add! || already exists in whitelist, no need to add!
             } else if (executorReturnWrapper.getOutput().contains("already exists in")) {
                 /// we remove [i], because there is no need for it.

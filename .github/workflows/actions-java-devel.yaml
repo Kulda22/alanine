@@ -6,8 +6,28 @@ on:
     tags:
 
 jobs:
-  buildx:
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Install Docker
+        uses: docker-practice/actions-setup-docker@master
+        with:
+          docker_buildx: false
+          docker_cli_experimental: false
+      - name: Install pihole
+        run: docker run -d --name pihole pihole/pihole:latest
+
+      - name: Test integration with Pi-hole
+        run: mvn test -DskipTests=false
+  build:
+    runs-on: ubuntu-latest
+    needs: test
     steps:
       # Get the repositery's code
       - name: Checkout
@@ -18,7 +38,6 @@ jobs:
           java-version: 11
       - name: Build with Maven
         run: mvn -Dquarkus.package.type=fast-jar package
-
       - name: Set up Docker Buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v2

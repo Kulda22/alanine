@@ -71,10 +71,14 @@ Just download the install script (`install.sh`) and run `$ sudo ./install.sh`.
 
 For uninstall just use uninstall script (`$ sudo ./uninstall`)
 
+### Update
+Sorry, but we chose the easiest way to update - just uninstall and install again!
+
 
 ## Browser plugin 
 Alanine plugin is web browser plugin that uses this server. 
 See [plugin repository](https://github.com/Kulda22/alanine-plugin)
+
 
 ## Open api specification
 To be done. 
@@ -83,5 +87,12 @@ To be done.
 ## Contributing
 
 Any kind of PR, wishes for feature or feedback is welcome!
+
+## Versions
+**X.Y.Z**
+
+- **Z** - Bugfixes, small changes that doesn't change the REST API structure.
+- **Y** - Bigger change in request/response structure - for example adding or removing parameter. 
+- **X** - Adding/removing endpoint.
 
 

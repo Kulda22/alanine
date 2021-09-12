@@ -1,9 +1,5 @@
 # Alanine Server
 
-## IMPORTANT : FEEDBACK
-
-Because Alanine is still new project,  we are in serious need of your feedback. Please tell us your first impresion via this [form](https://forms.gle/AU2TKsVE4DVNAxHh6) after day or two of use.   
-
 ## Overview
 
 This project aims to simplify controlling of your Pi-hole. It consists of two parts 

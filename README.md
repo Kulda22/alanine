@@ -91,6 +91,7 @@ Any kind of PR, wishes for feature or feedback is welcome!
 - **Y** - Bigger change in request/response structure - for example adding or removing parameter. 
 - **X** - Adding/removing endpoint.
 
-
+## Pi-hole version
+Pi-hole FTL v5.12, Web v5.9 and Core v5.7
 
 

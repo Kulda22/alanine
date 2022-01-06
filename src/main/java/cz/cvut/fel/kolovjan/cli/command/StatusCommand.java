@@ -27,7 +27,7 @@ public class StatusCommand extends Command {
     public StatusCommandResponse execute() {
         ExecutorReturnWrapper statusReturnWrapper = commandExecutor.execute("pihole status");
         if (statusReturnWrapper.getExitValue() == 0) {
-            boolean isDnsListening = statusReturnWrapper.getOutput().contains("DNS service is listening");
+            boolean isDnsListening = statusReturnWrapper.getOutput().contains("FTL is listening");
             boolean isBlockingEnabled = statusReturnWrapper.getOutput().contains("Pi-hole blocking is enabled");
             return new StatusCommandResponse(true, "status queried successfully", isDnsListening, isBlockingEnabled);
         } else {

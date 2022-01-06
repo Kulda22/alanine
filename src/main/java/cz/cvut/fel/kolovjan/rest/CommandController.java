@@ -35,7 +35,7 @@ public class CommandController {
     private final VersionService versionService;
 
     @HEAD
-    public Response hearthBeat() {
+    public Response heartbeat() {
         return Response.ok().build();
     }
 

@@ -14,9 +14,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -26,6 +24,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 
 @QuarkusTest
+@TestMethodOrder(MethodOrderer.MethodName.class)
 @TestHTTPEndpoint(CommandController.class)
 @Slf4j
 class CommandControllerTest {
@@ -49,12 +48,16 @@ class CommandControllerTest {
         try {
             dnsBlockingService.enableBlocking();
             loggingService.enableLogging();
-        } catch (PiholeAlreadyEnabledException ignored) {
+            /// We are still working with external system
+            Thread.sleep(1000);
+        } catch (PiholeAlreadyEnabledException | InterruptedException ignored) {
         }
+
+
     }
 
     @Test
-    void hearthBeat() {
+    void heartbeat() {
         when().head()
               .then()
               .statusCode(200);
@@ -71,6 +74,7 @@ class CommandControllerTest {
               .body("isBlockingEnabled", Matchers.is(statusMap.get("isBlockingEnabled")))
               .body("isDNSListening", Matchers.is(statusMap.get("isDNSListening")))
               .body("isLoggingEnabled", Matchers.is(statusMap.get("isLoggingEnabled")));
+
     }
 
     @Test

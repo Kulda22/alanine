@@ -92,6 +92,5 @@ Any kind of PR, wishes for feature or feedback is welcome!
 - **X** - Adding/removing endpoint.
 
 ## Pi-hole version
-Pi-hole FTL v5.13, Web v5.10 and Core v5.87
-
+Pi-hole FTL v5.14, Web v5.11 and Core v5.9
 
